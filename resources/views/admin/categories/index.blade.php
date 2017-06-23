@@ -30,7 +30,7 @@
                             <td>{{ $cat->id }}</td>
                             <td>{{ $cat->name }}</td>
                             <td>{{ $cat->slug }}</td>
-                            <td><?php echo ($cat->parent_id == null) ? "không có" : $cat->parent_id; ?></td>
+                            <td><?php echo ($cat->parent_id == 0) ? "không có" : $cat->parent_id; ?></td>
                             <td>{{ $cat->level }}</td>
                             <td class="center">
                                 {!! Form::open(['method' => 'delete', 'route' => ['category.destroy', $cat->id]]) !!}

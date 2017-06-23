@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+    function __construct()
+    {
+        $categories = Category::all();
+        $parentMin = DB::table('categories')->min('parent_id');
+        $char = '';
+
+        View::share(compact('categories', 'parentMin', 'char'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +26,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index');
     }
 
     /**
@@ -27,9 +36,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $parents = Category::pluck('name', 'id')->toArray();
-
-        return view('admin.categories.create', compact('parents'));
+        return view('admin.categories.create');
     }
 
     /**
@@ -42,7 +49,7 @@ class CategoryController extends Controller
     {
         $slug = toSlug($request->name);
 
-        if ($request->parent_id == null) {
+        if ($request->parent_id == 0) {
             $level = 1;
         } else {
             $parentCat = Category::findOrFail($request->parent_id);
@@ -103,7 +110,7 @@ class CategoryController extends Controller
     {
         $slug = toSlug($request->name);
 
-        if ($request->parent_id == null) {
+        if ($request->parent_id == 0) {
             $level = 1;
         } else {
             $parentCat = Category::findOrFail($request->parent_id);
