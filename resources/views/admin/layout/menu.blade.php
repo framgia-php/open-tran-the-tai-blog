@@ -31,10 +31,10 @@
                 <a href="#"><i class="fa fa-cube fa-fw"></i> News<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">List</a>
+                        <a href="{{ route('news.index') }}">List</a>
                     </li>
                     <li>
-                        <a href="#">Add</a>
+                        <a href="{{ route('news.create') }}">Add</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
