@@ -8,6 +8,21 @@
 
 // Chạy cmd : composer  dumpautoload
 
+function showCategories($categories, $parentMin, $char)
+{
+    foreach ($categories as $key => $cat) {
+        if ($cat['parent_id'] == $parentMin) {
+            echo '<option name="' . $cat['name'] . '" value="' . $cat['id'] . '">';
+            echo $char . $cat['level'] . '.' . $cat['name'];
+            echo '</option>';
+
+            unset($categories[$key]);
+
+            showCategories($categories, $cat['id'], $char . '|&emsp;&emsp;');
+        }
+    }
+}
+
 function toSlug($str, $strSymbol = '-', $case = MB_CASE_LOWER)
 {
     // MB_CASE_UPPER / MB_CASE_TITLE / MB_CASE_LOWER

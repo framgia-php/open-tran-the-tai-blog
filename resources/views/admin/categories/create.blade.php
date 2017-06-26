@@ -14,7 +14,10 @@
                     {!!Form::open(['method' => 'POST', 'route' => 'category.store'])!!}
                     <div class="form-group">
                         {!! Form::label('parent_id','Parent Category') !!}
-                        {!! Form::select('parent_id', [ null => '--- Please Select Category---' ] + $parents, null, ['class' => 'form-control']) !!}
+                        <select class="form-control" name="parent_id" id="parent_id">
+                            <option value="0">--- Please Select Category---</option>
+                            <?php showCategories($categories, $parentMin, $char); ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         {!! Form::label('cat_id','Category') !!}
@@ -29,4 +32,15 @@
         </div>
         <!-- /.container-fluid -->
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $("#parent_id").change(function () {
+                var name = $(this).find('option:selected').attr("name");
+                $("#parent_id option:selected").text(name);
+            });
+        });
+    </script>
 @endsection
