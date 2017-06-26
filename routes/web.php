@@ -12,10 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::resource('category', 'CategoryController');
     Route::resource('news', 'NewsController');
+    Route::resource('users', 'UserController');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
