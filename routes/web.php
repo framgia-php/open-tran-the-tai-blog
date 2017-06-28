@@ -15,10 +15,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
+Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::resource('category', 'CategoryController');
     Route::resource('news', 'NewsController');
     Route::resource('users', 'UserController');
+    Route::get('/', 'CategoryController@index');
 });
 
 Auth::routes();

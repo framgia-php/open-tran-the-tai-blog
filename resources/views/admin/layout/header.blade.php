@@ -18,12 +18,21 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a><i class="fa fa-user fa-fw"></i> Name</a>
+                <li><a><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                <li><a href="{{ route('users.edit', ['id' => Auth::user()->id]) }}"><i class="fa fa-gear fa-fw"></i>
+                        Settings</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        <i class="fa fa-sign-out fa-fw"></i>Logout
+                    </a>
+
+                    {!! Form::open(['id' => 'logout-form', 'method' => 'POST', 'route' => 'logout']) !!}
+                    {!! Form::close() !!}
                 </li>
             </ul>
             <!-- /.dropdown-user -->
