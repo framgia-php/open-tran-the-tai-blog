@@ -7,6 +7,52 @@
 // ]
 
 // Chạy cmd : composer  dumpautoload
+function highLight($string, $key)
+{
+    return str_replace($key, "<span style='background:yellow;'>$key</span>", $string);
+}
+
+function showMenu($categories, $parentMin, $level = 1)
+{
+    $catChild = [];
+
+    foreach ($categories as $key => $cat) {
+        if ($cat['parent_id'] == $parentMin) {
+            $catChild[] = $cat;
+            unset($categories[$key]);
+        }
+    }
+
+    if ($catChild) {
+        if ($level == 1) {
+            foreach ($catChild as $key => $child) {
+                echo '<li class="';
+                if (count($child->children) > 0) {
+                    echo 'dropdown-submenu';
+                }
+                echo ' list-group-item"><a tabindex="-1">' . $child['name'] . '</a>';
+                showMenu($categories, $child['id'], ++$level);
+                echo '</li>';
+            }
+        } else {
+            echo '<ul class="dropdown-menu">';
+            foreach ($catChild as $key => $child) {
+                echo '<li class="';
+                if (count($child->children) > 0) {
+                    echo 'dropdown-submenu';
+                }
+                echo '"><a ';
+                echo 'href="' . route('news.type', ['id' => $child->id, 'slug' => $child->slug]) . '"';
+                echo '>' . $child['name'] . '</a>';
+
+//                href="{{ route('news.type', ['id' => $children->id, 'slug'=> $children->slug]) }}"
+                showMenu($categories, $child['id'], ++$level);
+                echo '</li>';
+            }
+            echo '</ul>';
+        }
+    }
+}
 
 function showCategories($categories, $parentMin, $char)
 {

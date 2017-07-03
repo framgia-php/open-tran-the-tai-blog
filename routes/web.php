@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
 Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::resource('category', 'CategoryController');
     Route::resource('news', 'NewsController');
@@ -24,4 +20,11 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admi
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'Front\HomeController@index')->name('home');
+Route::get('NewsType/{id}/{slug}.html', 'Front\HomeController@newsType')->name('news.type');
+Route::get('news/{id}/{slug}.html', 'Front\HomeController@news')->name('news');
+
+Route::post('comment/{id}', 'CommentController@postComment')->name('post.comment');
+Route::get('profile', 'Front\HomeController@getProfile')->name('get.profile');
+Route::put('profile', 'Front\HomeController@postProfile')->name('put.profile');
+Route::get('search', 'Front\HomeController@search')->name('get.search');

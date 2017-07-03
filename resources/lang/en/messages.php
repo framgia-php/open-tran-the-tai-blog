@@ -59,4 +59,6 @@ return [
     'email.address' => 'E-Mail Address',
     'forgot_password' => 'Forgot Your Password?',
     'remember_me' => 'Remember Me',
+    'comment_success' => 'Comment Success!',
+    'comment_error' => 'Comment Error!',
 ];
